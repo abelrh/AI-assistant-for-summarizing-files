@@ -4,6 +4,4 @@ langchain-google-genai
 edge-tts
 python-dotenv
 pypdf
-langchain_google_genai
-langchain_community
-tempfile
+langchain-community
