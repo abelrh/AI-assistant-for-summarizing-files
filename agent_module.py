@@ -1,18 +1,19 @@
 # agent_module.py
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
-
+from dotenv import load_dotenv
+import os
 def generate_full_summary(full_text: str):
     """
     إرسال النص الكامل للمستند إلى Gemini 2.5 Flash مباشرة للحصول على تلخيص
     تفاعلي بأسلوب بشري مهيأ للإلقاء الصوتي.
     """
+    load_dotenv()
     # تهيئة موديل Gemini بمفتاح الـ API الخاص بك
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.5-flash",
         temperature=0.4, # تم رفعها قليلاً لزيادة التفاعلية والطلاقة البشرية في الأسلوب
-        api_key="AQ.Ab8RN6Jss5_RNwfK5-8otO2hYXhJrtnJUoM7nhYmVXSFwjjZvw",
-         vertexai=False
+        api_key=os.getenv("GEMINI_API_KEY")
     )
 
     # صياغة الـ System Prompt ليكون تفاعلياً ومناسباً لإلقاء رجالي إذاعي ممتع
