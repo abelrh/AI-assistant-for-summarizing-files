@@ -22,7 +22,9 @@ def generate_full_summary(full_text: str):
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.5-flash",
         temperature=0.4,
-        api_key=api_key
+        api_key=api_key,
+        vertexai=False,
+        
     )
 
     # صياغة الـ System Prompt ليكون تفاعلياً ومناسباً لإلقاء رجالي إذاعي ممتع
