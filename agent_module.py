@@ -1,19 +1,28 @@
 # agent_module.py
+import os
+import streamlit as st
+from dotenv import load_dotenv
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
-from dotenv import load_dotenv
-import os
+
+load_dotenv()
+
 def generate_full_summary(full_text: str):
     """
     إرسال النص الكامل للمستند إلى Gemini 2.5 Flash مباشرة للحصول على تلخيص
     تفاعلي بأسلوب بشري مهيأ للإلقاء الصوتي.
     """
-    load_dotenv()
-    # تهيئة موديل Gemini بمفتاح الـ API الخاص بك
+    # جلب المفتاح أولاً من Secrets (أونلاين) ثم من ملف .env (محلياً)
+    api_key = st.secrets.get("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY")
+    
+    if not api_key:
+        raise ValueError("API Key missing! Please set GEMINI_API_KEY in Secrets or .env file.")
+
+    # تهيئة موديل Gemini بالمفتاح الصحيح
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.5-flash",
-        temperature=0.4, # تم رفعها قليلاً لزيادة التفاعلية والطلاقة البشرية في الأسلوب
-        api_key=os.getenv("GEMINI_API_KEY")
+        temperature=0.4,
+        api_key=api_key
     )
 
     # صياغة الـ System Prompt ليكون تفاعلياً ومناسباً لإلقاء رجالي إذاعي ممتع
