@@ -5,3 +5,4 @@ edge-tts
 python-dotenv
 pypdf
 langchain-community
+langchain-groq
