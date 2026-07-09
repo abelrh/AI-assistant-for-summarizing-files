@@ -12,6 +12,7 @@ def generate_full_summary(full_text: str):
         model="gemini-2.5-flash",
         temperature=0.4, # تم رفعها قليلاً لزيادة التفاعلية والطلاقة البشرية في الأسلوب
         api_key="AQ.Ab8RN6Jss5_RNwfK5-8otO2hYXhJrtnJUoM7nhYmVXSFwjjZvw",
+         vertexai=False
     )
 
     # صياغة الـ System Prompt ليكون تفاعلياً ومناسباً لإلقاء رجالي إذاعي ممتع
