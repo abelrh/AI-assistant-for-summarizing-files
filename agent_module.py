@@ -1,30 +1,28 @@
 # agent_module.py
-import os
-import streamlit as st
-from dotenv import load_dotenv
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_google_genai import ChatGoogleGenerativeAI
-
-load_dotenv()
+from langchain_groq import ChatGroq
+from dotenv import load_dotenv
+import os
 
 def generate_full_summary(full_text: str):
     """
-    إرسال النص الكامل للمستند إلى Gemini 2.5 Flash مباشرة للحصول على تلخيص
+    إرسال النص الكامل للمستند إلى Groq (LLaMA 3.3 70B) مباشرة للحصول على تلخيص
     تفاعلي بأسلوب بشري مهيأ للإلقاء الصوتي.
     """
-    # جلب المفتاح أولاً من Secrets (أونلاين) ثم من ملف .env (محلياً)
-    api_key = st.secrets.get("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY")
-    
-    if not api_key:
-        raise ValueError("API Key missing! Please set GEMINI_API_KEY in Secrets or .env file.")
+    load_dotenv()
 
-    # تهيئة موديل Gemini بالمفتاح الصحيح
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
-        temperature=0.4,
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise ValueError(
+            "لم يتم العثور على GROQ_API_KEY. "
+            "أضفه في ملف .env بالشكل: GROQ_API_KEY=your_key_here"
+        )
+
+    # تهيئة موديل Groq بمفتاح الـ API الخاص بك
+    llm = ChatGroq(
+        model="llama-3.3-70b-versatile",
+        temperature=0.4, # تم رفعها قليلاً لزيادة التفاعلية والطلاقة البشرية في الأسلوب
         api_key=api_key,
-        vertexai=False,
-        
     )
 
     # صياغة الـ System Prompt ليكون تفاعلياً ومناسباً لإلقاء رجالي إذاعي ممتع
